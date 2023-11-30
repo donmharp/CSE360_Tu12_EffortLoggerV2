@@ -1,9 +1,10 @@
 package application;
 
-import java.util.ArrayList;
+import java.io.Serializable;
 
 // EffortLog class written by Donovan Harp and Yashwant Gadhave
-public class EffortLog {
+public class EffortLog implements Serializable {
+	private static final long serialVersionUID = 1L;
 	// Data attributes
 	private int effortHours;
 	private int effortMinutes;
@@ -11,11 +12,12 @@ public class EffortLog {
 	private int bias;
 	private int storyPoints;
 	private boolean selected;
-	private Definitions cycle;
+	private Definitions definitions;
 	private String startTime;
     private String stopTime;
-	
-	private ArrayList<DefectLog> defectLogs;
+    private String lifeCycleStep;
+    private String effortCategory;
+
 	
 	// Default Constructor
 	public EffortLog() {
@@ -25,8 +27,6 @@ public class EffortLog {
 		bias = 0;
 		storyPoints = -1;
 		selected = true;
-		
-		defectLogs = new ArrayList<DefectLog>();
 	}
 	
 	// Basic Constructor
@@ -37,8 +37,6 @@ public class EffortLog {
 		bias = 0;
 		storyPoints = -1;
 		selected = true;
-		
-		defectLogs = new ArrayList<DefectLog>();
 	}
 	
 	// Advanced Constructor
@@ -49,9 +47,25 @@ public class EffortLog {
 		bias = b;
 		storyPoints = -1;
 		selected = true;
-		
-		defectLogs = new ArrayList<DefectLog>();
 	}
+	
+	public void setLifeCycleStep(String lifeCycleStep) {
+        this.lifeCycleStep = lifeCycleStep;
+    }
+
+    // Setter for effortCategory
+    public void setEffortCategory(String effortCategory) {
+        this.effortCategory = effortCategory;
+    }
+
+    // Optionally, add getters if needed
+    public String getLifeCycleStep() {
+        return lifeCycleStep;
+    }
+
+    public String getEffortCategory() {
+        return effortCategory;
+    }
 	
 	public void setTime(int hours, int minutes) {
 		effortHours = hours;
@@ -99,38 +113,39 @@ public class EffortLog {
 	}
 	
 	public void setDefinitions(Definitions d) {
-		cycle = d;
+		definitions = d;
 	}
 	
 	public Definitions getDefinitions() {
-		return cycle;
-	}
-	
-	public ArrayList<DefectLog> getDefectLogs() {
-		return defectLogs;
-	}
-	
-	public void addDefectLog(DefectLog newLog) {
-		defectLogs.add(newLog);
+		return definitions;
 	}
 	
 	public void setStartTime(String startTime) {
-        // You may want to perform additional validation here
         this.startTime = startTime;
     }
 	
-	// Get start time
+
     public String getStartTime() {
         return startTime;
     }
 
-    // Set stop time
+
     public void setStopTime(String stopTime) {
-        // You may want to perform additional validation here
+ 
         this.stopTime = stopTime;
     }
     
     public String getStopTime() {
         return stopTime;
     }
+    
+	public void copyPropertiesFrom(EffortLog other) {
+	  
+	    this.setStartTime(other.getStartTime());
+	    this.setStopTime(other.getStopTime());
+	    this.setLifeCycleStep(other.getLifeCycleStep());
+	    this.setEffortCategory(other.getEffortCategory());   
+	}
+	
+
 }
